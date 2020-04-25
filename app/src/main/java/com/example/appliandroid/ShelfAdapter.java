@@ -1,27 +1,45 @@
 package com.example.appliandroid;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class ShelfAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Shelf> arrayShelves;
+    ArrayList<Shelf> shelvesList;
 
+    public ShelfAdapter(Context context, ArrayList<Shelf> shelvesList){
+        this.context = context;
+        this.shelvesList = shelvesList;
+    }
+    
+    
     @Override
     public int getCount() {
-        return arrayShelves.size();
+        return shelvesList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return arrayShelves.get(position);
+        return shelvesList.get(position);
     }
 
     @Override
@@ -35,7 +53,8 @@ public class ShelfAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.shelf_name,parent,false);
         }
         TextView shelf_text_name = (TextView) convertView.findViewById(R.id.shelf_text_name);
-        shelf_text_name.setText(arrayShelves.get(position).getTitle());
+        shelf_text_name.setText(shelvesList.get(position).getTitle());
         return convertView;
     }
+
 }

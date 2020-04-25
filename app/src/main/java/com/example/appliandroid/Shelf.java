@@ -2,18 +2,18 @@ package com.example.appliandroid;
 
 class Shelf {
 
-    private Integer category_id;
+    private String category_id;
     private String title = "";
     private String products_url = "";
 
 
-    Shelf(Integer category_id, String title, String products_url) {
+    Shelf(String category_id, String title, String products_url) {
         this.category_id = category_id;
         this.title = title;
         this.products_url = products_url;
     }
 
-    public void setCategory_id(Integer category_id) {
+    public void setCategory_id(String category_id) {
         this.category_id = category_id;
     }
 
@@ -33,7 +33,7 @@ class Shelf {
         return title;
     }
 
-    public Integer getCategory_id() {
+    public String getCategory_id() {
         return category_id;
     }
 }
