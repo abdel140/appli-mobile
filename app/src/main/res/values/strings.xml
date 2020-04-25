@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">AppliAndroid</string>
+    <string name="epsi_name">EPSI</string>
+    <string name="zone_a">ZONE 1 </string>
+    <string name="zone_b">ZONE 2</string>
+    <string name="shelfs_list">Liste des rayons </string>
+    <string name="products_list">Liste des produits </string>
+    <string name="groups_list">Liste des groupes </string>
+
+
+
 </resources>
