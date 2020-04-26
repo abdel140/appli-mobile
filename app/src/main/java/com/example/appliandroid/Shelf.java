@@ -1,6 +1,8 @@
 package com.example.appliandroid;
 
-class Shelf {
+import java.io.Serializable;
+
+class Shelf implements Serializable {
 
     private String category_id;
     private String title = "";

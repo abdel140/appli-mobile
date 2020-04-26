@@ -1,15 +1,12 @@
 package com.example.appliandroid;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -19,29 +16,33 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ShelfActivity extends BaseAppliActivity {
-    ListView listView;
-    ArrayList<Shelf> shelvesList;
+public class ProductsListActivity extends AppCompatActivity {
+    Shelf shelf;
+    ListView lv_products;
+    ArrayList<Product> productArrayList;
+
+    public static void display(Activity activity, Shelf shelf){
+        Intent intent = new Intent(activity,ProductsListActivity.class);
+        intent.putExtra("shelf",shelf);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.categories);
-        listView = findViewById(R.id.lv_rayons);
-        shelvesList = new ArrayList();
+        setContentView(R.layout.products_list);
+        productArrayList = new ArrayList<>();
+        lv_products = findViewById(R.id.lv_products);
+        shelf = (Shelf) getIntent().getExtras().get("shelf");
+        System.out.println("##################"+shelf.getTitle());
         new fetchData().execute();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProductsListActivity.display(ShelfActivity.this, shelvesList.get(position));
-            }
-        });
     }
+
 
     private class fetchData extends AsyncTask<String,String,String> {
 
@@ -53,10 +54,10 @@ public class ShelfActivity extends BaseAppliActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            shelvesList.clear();
+            productArrayList.clear();
             String result = null;
             try {
-                URL url = new URL("http://djemam.com/epsi/categories.json");
+                URL url = new URL(shelf.getProducts_url());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setDoOutput( true );
                 conn.setInstanceFollowRedirects( false );
@@ -95,21 +96,18 @@ public class ShelfActivity extends BaseAppliActivity {
                 JSONArray items = obj.getJSONArray("items") ;
                 for(int i=0;i<items.length();i++){
                     JSONObject jsonObject = items.getJSONObject(i);
-                    String products_url = jsonObject.getString("products_url");
-                    String title = jsonObject.getString("title");
-                    String shelf_id = jsonObject.getString("category_id");
-                    Shelf shelf = new Shelf(shelf_id,title,products_url);
-                    shelvesList.add(shelf);
+                    String picture_url = jsonObject.getString("picture_url");
+                    String name = jsonObject.getString("name");
+                    String description = jsonObject.getString("description");
+                    Product product = new Product(name,description,picture_url);
+                    productArrayList.add(product);
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            ShelfAdapter adapter = new ShelfAdapter(ShelfActivity.this,shelvesList);
-            listView.setAdapter(adapter);
-
+            ProductAdapter productAdapter = new ProductAdapter(ProductsListActivity.this,productArrayList);
+            lv_products.setAdapter(productAdapter);
         }
     }
 }
-
-

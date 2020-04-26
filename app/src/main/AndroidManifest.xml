@@ -20,5 +20,6 @@
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".GroupInfoActivity" />
         <activity android:name=".ShelfActivity" />
+        <activity android:name=".ProductsListActivity" />
     </application>
 </manifest>
