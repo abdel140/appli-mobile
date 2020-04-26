@@ -21,5 +21,6 @@
         <activity android:name=".GroupInfoActivity" />
         <activity android:name=".ShelfActivity" />
         <activity android:name=".ProductsListActivity" />
+        <activity android:name=".ProductActivity" />
     </application>
 </manifest>

@@ -11,10 +11,9 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/product_image_details"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:srcCompat="@drawable/ic_launcher_background"
         tools:ignore="VectorDrawableCompat"
         android:layout_marginBottom="50dp"/>
 

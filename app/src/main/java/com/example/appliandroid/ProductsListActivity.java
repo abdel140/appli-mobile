@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -39,8 +41,15 @@ public class ProductsListActivity extends AppCompatActivity {
         productArrayList = new ArrayList<>();
         lv_products = findViewById(R.id.lv_products);
         shelf = (Shelf) getIntent().getExtras().get("shelf");
-        System.out.println("##################"+shelf.getTitle());
         new fetchData().execute();
+        lv_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProductActivity.display(ProductsListActivity.this,productArrayList.get(position));
+            }
+        });
+
+
     }
 
 
