@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class ProductsListActivity extends BaseAppliActivity {
     ListView lv_products;
     ArrayList<Product> productArrayList;
 
+
     public static void display(Activity activity, Shelf shelf){
         Intent intent = new Intent(activity,ProductsListActivity.class);
         intent.putExtra("shelf",shelf);
@@ -39,10 +41,12 @@ public class ProductsListActivity extends BaseAppliActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.products_list);
         showgoBackButton();
+        TextView tv =findViewById(R.id.textNomAppli);
         productArrayList = new ArrayList<>();
         lv_products = findViewById(R.id.lv_products);
         shelf = (Shelf) getIntent().getExtras().get("shelf");
         new fetchData().execute();
+        tv.setText(shelf.getTitle());
         lv_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

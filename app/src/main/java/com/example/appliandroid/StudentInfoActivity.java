@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 public class StudentInfoActivity extends BaseAppliActivity {
 
+
     public String AVATAR_STANDARD = "drawable/logo.jpg";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class StudentInfoActivity extends BaseAppliActivity {
         TextView student_email = findViewById(R.id.student_email);
         TextView group_name = findViewById(R.id.group_name);
         Student student = (Student) getIntent().getExtras().get("student");
+        TextView tv =findViewById(R.id.textNomAppli);
+        tv.setText(student.getNom());
         String full_name =student.getNom() + " " +  student.getPrenom();
         student_name.setText(full_name);
         student_email.setText(student.getEmail());

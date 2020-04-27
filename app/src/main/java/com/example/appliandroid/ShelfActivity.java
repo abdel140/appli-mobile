@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -27,12 +28,15 @@ import java.util.ArrayList;
 
 public class ShelfActivity extends BaseAppliActivity {
     public final String CATEGORY_URI = "http://djemam.com/epsi/categories.json";
+    public final String ACTIVITY_NAME = "Categories";
     ListView listView;
     ArrayList<Shelf> shelvesList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.categories);
+        TextView tv =findViewById(R.id.textNomAppli);
+        tv.setText(ACTIVITY_NAME);
         showgoBackButton();
         listView = findViewById(R.id.lv_rayons);
         shelvesList = new ArrayList();

@@ -27,10 +27,13 @@ public class ProductActivity extends BaseAppliActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details);
         showgoBackButton();
+        TextView tv =findViewById(R.id.textNomAppli);
         ImageView product_image = findViewById(R.id.product_image_details);
         TextView product_description = findViewById(R.id.product_description);
         Product product = (Product) getIntent().getExtras().get("product");
+        tv.setText(product.getName());
         product_description.setText(product.getDescription());
         Picasso.get().load(product.getPicture_url()).into(product_image);
+
     }
 }
