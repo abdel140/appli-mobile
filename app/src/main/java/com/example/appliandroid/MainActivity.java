@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseAppliActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View logo = findViewById(R.id.logo_epsi);

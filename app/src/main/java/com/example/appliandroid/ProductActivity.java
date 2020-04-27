@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends BaseAppliActivity {
 
     public static void display(Activity activity, Product product){
         Intent intent = new Intent(activity, ProductActivity.class);
@@ -26,6 +26,7 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_details);
+        showgoBackButton();
         ImageView product_image = findViewById(R.id.product_image_details);
         TextView product_description = findViewById(R.id.product_description);
         Product product = (Product) getIntent().getExtras().get("product");

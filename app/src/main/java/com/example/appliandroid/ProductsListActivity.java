@@ -23,7 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ProductsListActivity extends AppCompatActivity {
+public class ProductsListActivity extends BaseAppliActivity {
     Shelf shelf;
     ListView lv_products;
     ArrayList<Product> productArrayList;
@@ -38,6 +38,7 @@ public class ProductsListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.products_list);
+        showgoBackButton();
         productArrayList = new ArrayList<>();
         lv_products = findViewById(R.id.lv_products);
         shelf = (Shelf) getIntent().getExtras().get("shelf");

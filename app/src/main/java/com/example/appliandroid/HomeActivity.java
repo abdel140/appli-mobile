@@ -7,12 +7,13 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseAppliActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        showgoBackButton();
         View zone_a_button = findViewById(R.id.button_zone_a);
         View zone_b_button = findViewById(R.id.button_zone_b);
         zone_a_button.setOnClickListener(new View.OnClickListener() {

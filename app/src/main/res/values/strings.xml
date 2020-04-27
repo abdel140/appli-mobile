@@ -6,7 +6,9 @@
     <string name="shelfs_list">Liste des rayons </string>
     <string name="products_list">Liste des produits </string>
     <string name="groups_list">Liste des groupes </string>
-
+    <string name="student1">Etudiant 1 </string>
+    <string name="student2">Etudiant 2</string>
+    <string name="student3">Etudiant 3</string>
 
 
 </resources>

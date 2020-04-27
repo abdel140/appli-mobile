@@ -26,12 +26,14 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ShelfActivity extends BaseAppliActivity {
+    public final String CATEGORY_URI = "http://djemam.com/epsi/categories.json";
     ListView listView;
     ArrayList<Shelf> shelvesList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.categories);
+        showgoBackButton();
         listView = findViewById(R.id.lv_rayons);
         shelvesList = new ArrayList();
         new fetchData().execute();
@@ -56,7 +58,7 @@ public class ShelfActivity extends BaseAppliActivity {
             shelvesList.clear();
             String result = null;
             try {
-                URL url = new URL("http://djemam.com/epsi/categories.json");
+                URL url = new URL(CATEGORY_URI);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setDoOutput( true );
                 conn.setInstanceFollowRedirects( false );
