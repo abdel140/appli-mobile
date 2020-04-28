@@ -41,87 +41,46 @@ public class ProductsListActivity extends BaseAppliActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.products_list);
         showgoBackButton();
-        TextView tv =findViewById(R.id.textNomAppli);
+        TextView tv = findViewById(R.id.textNomAppli);
         productArrayList = new ArrayList<>();
         lv_products = findViewById(R.id.lv_products);
         shelf = (Shelf) getIntent().getExtras().get("shelf");
-        new fetchData().execute();
         tv.setText(shelf.getTitle());
         lv_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProductActivity.display(ProductsListActivity.this,productArrayList.get(position));
+                ProductActivity.display(ProductsListActivity.this, productArrayList.get(position));
             }
         });
+        new HttpAyncTask(shelf.getProducts_url(), new HttpAyncTask.HttpAsyncListenner() {
+            @Override
+            public void webServiceDone(String result) {
+                initData(result);
+            }
 
-
+            @Override
+            public void webServiceError(Exception e) {
+                displayToast(e.getMessage());
+            }
+        }).execute();
     }
-
-
-    private class fetchData extends AsyncTask<String,String,String> {
-
-        @Override
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            productArrayList.clear();
-            String result = null;
-            try {
-                URL url = new URL(shelf.getProducts_url());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setDoOutput( true );
-                conn.setInstanceFollowRedirects( false );
-                conn.setRequestMethod( "GET" );
-                conn.setRequestProperty( "Content-Type", "application/json");
-                conn.setDoInput(true);
-                conn.setRequestProperty( "charset", "utf-8");
-                conn.setUseCaches(false);
-                if(conn.getResponseCode()== HttpURLConnection.HTTP_OK){
-                    InputStreamReader inputStream = new InputStreamReader(conn.getInputStream());
-                    BufferedReader reader = new BufferedReader(inputStream);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String temp;
-                    while((temp = reader.readLine())!=null){
-                        stringBuilder.append(temp);
-                    }
-                    result = stringBuilder.toString();
-                }
-                else{
-                    return "error!";
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void initData(String result) {
+        try {
+            JSONObject obj = new JSONObject(result);
+            JSONArray items = obj.getJSONArray("items") ;
+            for(int i=0;i<items.length();i++){
+                JSONObject jsonObject = items.getJSONObject(i);
+                String picture_url = jsonObject.getString("picture_url");
+                String name = jsonObject.getString("name");
+                String description = jsonObject.getString("description");
+                Product product = new Product(name,description,picture_url);
+                productArrayList.add(product);
             }
-            return result;
-        }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject obj = new JSONObject(s);
-                JSONArray items = obj.getJSONArray("items") ;
-                for(int i=0;i<items.length();i++){
-                    JSONObject jsonObject = items.getJSONObject(i);
-                    String picture_url = jsonObject.getString("picture_url");
-                    String name = jsonObject.getString("name");
-                    String description = jsonObject.getString("description");
-                    Product product = new Product(name,description,picture_url);
-                    productArrayList.add(product);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            ProductAdapter productAdapter = new ProductAdapter(ProductsListActivity.this,productArrayList);
-            lv_products.setAdapter(productAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        ProductAdapter productAdapter = new ProductAdapter(ProductsListActivity.this,productArrayList);
+        lv_products.setAdapter(productAdapter);
     }
 }
